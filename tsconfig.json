@@ -1,0 +1,35 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "src/**/*",
+    ".next/types/**/*.ts",
+    "build/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "paths": {
+      "~/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "preserve",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "lib": [
+      "dom",
+      "es2023"
+    ],
+    "strictNullChecks": true
+  }
+}
