@@ -1,13 +1,21 @@
 "use client";
 
 import { WebSocketProvider } from "next-ws/client";
+import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
+import { formatWebSocketUrl } from "~/utils/url";
 
 export interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   data: any;
 }
 
-export default function RootLayout(p: React.PropsWithChildren) {
+export default function RootLayout(p: PropsWithChildren) {
+  const [wsURL, setWsURL] = useState<string | null>(null);
+
+  useEffect(() => {
+    setWsURL(formatWebSocketUrl("/api/ws"));
+  }, []);
+
   return (
     <html lang="en" style={{ fontFamily: "sans-serif" }}>
       <head>
@@ -17,9 +25,9 @@ export default function RootLayout(p: React.PropsWithChildren) {
         />
       </head>
       <body>
-        <WebSocketProvider url="ws://localhost:3000/api/ws">
-          {p.children}
-        </WebSocketProvider>
+        {wsURL && (
+          <WebSocketProvider url={wsURL}>{p.children}</WebSocketProvider>
+        )}
       </body>
     </html>
   );
